@@ -10,7 +10,7 @@ from torchvision import transforms
 CONTENT_DIR = "data/content-images"
 STYLE_DIR = "data/style-images"
 OUTPUT_DIR = "data/output-images"
-MODEL_PATH = "saved_models/mosaic.pth"
+MODEL_PATH = "fast_neural_style/download_saved_models.py"
 
 # Ensure directories exist
 os.makedirs(CONTENT_DIR, exist_ok=True)
@@ -20,6 +20,8 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 # Streamlit app
 st.title("🎨 AI-Powered Image Style Transfer")
 st.write("Upload a content image and a style image to generate a new stylized image.")
+
+
 
 # File upload
 content_file = st.file_uploader("Upload Content Image", type=["jpg", "jpeg", "png"])
@@ -56,7 +58,7 @@ if content_file and style_file:
 
             # Load model
             style_model = TransformerNet()
-            state_dict = torch.load(MODEL_PATH)
+            state_dict = torch.load(MODEL_PATH, weights_only= False)
             style_model.load_state_dict(state_dict)
             style_model.to(device)
             style_model.eval()
